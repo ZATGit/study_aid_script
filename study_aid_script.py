@@ -1,9 +1,9 @@
 import random
 import sys
-from sys import argv
+from urllib.request import urlopen
 
-# Run 'python scriptFileName.py word_bank.txt'
-script, text_file = argv
+WORD_LIST = []
+TEXT_URL = input("Paste in exact webpage url here: ")
 
 STUDY_CARDS = {
     "def &&&(@@@)": "define a method called &&& that takes @@@ parameters",
@@ -18,10 +18,10 @@ STUDY_CARDS = {
 
     "&&&.&&&(@@@)": "From &&& get the &&& function, call it with parameters self, @@@.",
 
-    "&&&.&&& = '&&&'": "From &&& get the &&& attribute an set it to '&&&'."
+    "&&&.&&& = '&&&'": "From &&& get the &&& attribute and set it to '&&&'."
 }
 
-print(f"\n\tStart Study Session for {script}\n")
+print("Start study session. Type: flip at any time to reverse the flash cards.")
 
 # Choose Order of Question Prompt
 if len(sys.argv) == 2 and sys.argv[1] == "flip":
@@ -29,16 +29,15 @@ if len(sys.argv) == 2 and sys.argv[1] == "flip":
 else:
     Q_KEY_FIRST = False
 
-with open(text_file) as f:
-    for line in text_file:
-        WORD_LIST = [line.strip() for line in text_file]
+for word in urlopen(TEXT_URL).readlines():
+    WORD_LIST.append(str(word.strip(), encoding="utf-8"))
 
 def convert(key, keyline):
     """Function converts list items to replace new strings with dictionary keys."""
-    # For non-classes
-    lower_case_words = random.sample(WORD_LIST, key.count("&&&"))
     # For classes
     upper_case_words = [w.capitalize() for w in random.sample(WORD_LIST, key.count("%%%"))]
+    # For non-classes
+    lower_case_words = random.sample(WORD_LIST, key.count("&&&"))
     result_list = []
     parameters_names = []
 
