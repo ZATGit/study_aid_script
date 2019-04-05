@@ -8,7 +8,15 @@ script, text_file = argv
 WORD_LIST = []
 
 STUDY_CARDS = {
+    "def &&&(@@@)": "define a method called &&& that takes @@@ parameters",
+    "class %%%(%%%):": "Create a class called %%% that is-a %%%.",
+    "class %%%(object): def__init__self,&&&)": "class %%% has-a __init__ that takes self and @@@ parameters.",
+    "class %%%(object): def &&&(self, @@@)": "class %%% has-a function &&& that takes self and parameters.",
+    "&&& = %%%()": "Set &&& to an instance of class %%%.",
+    "&&&.&&&(@@@)": "From &&& get the &&& function, call it with parameters self, @@@.",
+    "&&&.&&& = '&&&'": "From &&& get the &&& attribute an set it to '&&&'."
 }
+
 
 # Choose Order of Question Prompt
 if len(sys.argv) == 2 and sys.argv[1] == "flip":
@@ -23,7 +31,20 @@ for word in text_file.readlines():
 
 # Function for converting WORD_LIST items to strings
 #and replacing words in questions with dictionary keys
-def convert()
+def convert(key, keyline):
+    lower_case_words = random.sample(WORD_LIST, key.count("&&&"))
+    upper_case_words = [w.capitalize() for w in random.sample(WORDS_LIST, key.count("%%%"))]
+    master_list = []
+    parameters_names = []
+
+    for i in range(0, key.count("@@@")):
+        parameter_count = random.randint(1,3)
+        parameter_names.append(', '.join(
+            random.sample(WORDS_LIST, parameter_count)))
+
+    for sentence in key, key_line:
+        master_list = sentence[:]
+
 
 while True:
 
@@ -34,7 +55,9 @@ while True:
     # Create question List of QUESTIONS keys, make strings
     for key in question_keys:
         key_line = STUDY_CARDS[key]
-        question, answer = answer, question
+        question, answer = convert(key,key_line)
+        if Q_KEY_FIRST:
+            question, answer = answer, question
 
         print(question)
         print(input(f"Type your answer here: {answer}\n"))
